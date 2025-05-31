@@ -53,4 +53,6 @@ Then call the `ctypes` function like this:
 area = func(indata.ctypes.data, numpoints, dim)
 ```
 
+It is essential that the numpy array is contiguous (ie no strides) and in C axis order. 
+
 Note that this will work inside Numba `@jit`ed functions as long as the `func` is a global variable in your script.
