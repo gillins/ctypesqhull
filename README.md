@@ -29,7 +29,7 @@ This has not been tested on OSX or Windows, likely more complex steps will be re
 
 ## How to use
 
-Load the `ctypesqhull.so` library and declare the function like this:
+Load the `ctypesqhull.so` library and declare the function like this (you may need to modify to have a full path to `ctypesqhull.so`):
 
 ```
 import ctypes
@@ -54,6 +54,6 @@ numpoints, dim = data.shape
 area = func(indata.ctypes.data, numpoints, dim)
 ```
 
-It is essential that the numpy array is contiguous (ie no strides), in C axis order and `dtype` must be `float` or `numpy.float64`'
+It is essential that the numpy array is contiguous (ie no strides), in C axis order and `dtype` must be `float` or `numpy.float64`.
 
 Note that this will work inside Numba `@jit`ed functions as long as the `func` is a global variable in your script.
