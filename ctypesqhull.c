@@ -30,7 +30,9 @@ double ctypesqhull(double *points, int numpoints, int dim)
     qh_new_qhull(&qhstruct, dim, numpoints, points, 0, flags, NULL, NULL);
     qh_getarea(&qhstruct, qhstruct.facet_list);
     double result = qhstruct.totvol;
-    qh_freeqhull(&qhstruct, !qh_ALL);
+    qh_freeqhull(&qhstruct, qh_ALL);
+    int curlong, totlong;
+    qh_memfreeshort(&qhstruct, &curlong, &totlong);
 
     return result;
 }

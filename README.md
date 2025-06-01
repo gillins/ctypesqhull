@@ -47,13 +47,19 @@ import numpy
 data = numpy.array([[0,0,0], [1,0,0], [0,1,0], [0,0,1]], dtype=float)
 ```
 
+It is essential that the numpy array is contiguous (ie no strides), in C axis order and `dtype` must be `numpy.float64`. The following `assert`s
+can confirm this:
+
+```
+assert data.data.c_contiguous
+assert data.dtype == numpy.float64
+```
+
 Then call the `ctypes` function like this:
 
 ```
 numpoints, dim = data.shape
 area = func(indata.ctypes.data, numpoints, dim)
 ```
-
-It is essential that the numpy array is contiguous (ie no strides), in C axis order and `dtype` must be `float` or `numpy.float64`.
 
 Note that this will work inside Numba `@jit`ed functions as long as the `func` is a global variable in your script.
