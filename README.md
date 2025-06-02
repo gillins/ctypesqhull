@@ -1,5 +1,5 @@
 # ctypesqhull
-Library callable from ctypes that calculates area from points using QHull
+Library callable from ctypes that calculates volume from points using QHull
 
 ## Introduction
 
