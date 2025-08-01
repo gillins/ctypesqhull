@@ -25,16 +25,26 @@ On Linux with Conda:
 gcc -shared -fPIC -O2 -I $CONDA_PREFIX/include -L $CONDA_PREFIX/lib -o ctypesqhull.so ctypesqhull.c -l qhull_r -Wl,-rpath $CONDA_PREFIX/lib
 ```
 
-This has not been tested on OSX or Windows, likely more complex steps will be required.
+On OSX with Conda (may need to install conda package `cxx-compiler` first):
+```
+clang -shared -fpic -O2 -I $CONDA_PREFIX/include -L $CONDA_PREFIX/lib -o ctypesqhull.dylib ctypesqhull.c -l qhull_r -Wl,-rpath $CONDA_PREFIX/lib
+```
+
+This has not been tested on Windows, likely more complex steps will be required.
 
 ## How to use
 
-Load the `ctypesqhull.so` library and declare the function like this (you may need to modify to have a full path to `ctypesqhull.so`):
+Load the `ctypesqhull.so`/`ctypesqhull.dylib` library and declare the function like this (you may need to modify to have a full path the library):
 
 ```
+import platform
 import ctypes
 
-lib = ctypes.CDLL('./ctypesqhull.so')
+os_name = platform.system()
+if os_name == 'Linux':
+    lib = ctypes.CDLL('./ctypesqhull.so')
+elif os_name == 'Darwin':
+    lib = ctypes.CDLL('./ctypesqhull.dylib')
 func = lib.ctypesqhull
 func.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_int]
 func.restype = ctypes.c_double
